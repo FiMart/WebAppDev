@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>64010315_Exercise001_2</title>
+    <style>
+        fieldset legend {
+            font-style: italic;
+        }
+    </style>
+</head>
+
+<body>
+    <form>
+        <fieldset>
+            <legend>Contact Information</legend>
+            <div>
+                <label for="fname">First name:</label>
+                <input type="text" id="fname" name="fname"><br>
+                <label for="lastname">Last name:</label>
+                <input type="text" id="lname" name="lname"><br>
+                <label for="email">E-mail:</label>
+                <input type="text" id="email" name="email">
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>Competition Question</legend>
+            <div>
+                <label>How tall is the Eiffel Tower in Paris, France?</label><br>
+                <input type="radio" id="584" name="eiffel" value="584">
+                <label for="584">584ft</label><br>
+                <input type="radio" id="784" name="eiffel" value="784">
+                <label for="784">784ft</label><br>
+                <input type="radio" id="984" name="eiffel" value="984">
+                <label for="984">984ft</label><br>
+                <input type="radio" id="1184" name="eiffel" value="1184">
+                <label for="1184">1184ft</label>
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>Tiebreaker Question</legend>
+            <label for="tiequest">In 25 words or less, say why you would like to win $10,000:</label>
+            <div>
+                <textarea name="tiequest" id="tiequest" cols="39" rows="10"></textarea>
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>Enter competition</legend>
+            <input type="submit" value="Enter Competition">
+        </fieldset>
+    </form>
+</body>
+
+</html>
