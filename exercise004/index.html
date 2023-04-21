@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+
+<head></head>
+
+<body>
+    <div id="maincontainer"></div>
+    <script>
+        // Heading of Exercise 04: JavaScript&DOM
+        let maincontainer = document.getElementById("maincontainer");
+        let mainheader = document.createElement("h2");
+        mainheader.innerHTML = "Exercise 04: JavaScript&DOM";
+        maincontainer.appendChild(mainheader);
+
+        // Button of Click me to display Date and Time
+        let datebutton = document.createElement("button");
+        datebutton.innerHTML = "Click me to display Date and Time";
+        datebutton.style.marginBottom = "5px";
+        maincontainer.appendChild(datebutton);
+
+        // Append of Date and Time
+        let datetime = document.createElement("div");
+        datetime.hidden = true;
+        datetime.id = "datetime";
+        datetime.innerHTML = new Date().toString();
+        datetime.style.position = "fixed";
+        datetime.style.width = "fit-content";
+        datetime.style.right = "0";
+        datetime.style.top = "0";
+        datetime.style.border = "3px solid black";
+        maincontainer.appendChild(datetime);
+
+        // Change Color of Background Date and Time Every Change For 1 second
+        let color = ["crimson", "green", "blue", "pink", "limegreen", "deepskyblue"];
+        let nowcolor = 0;
+        let changecolor = () => {
+            datetime.style.backgroundColor = color[nowcolor];
+            datetime.style.color = "lavender";
+            datetime.style.fontFamily = "Helvetica";
+            nowcolor += 1;
+            nowcolor %= color.length;
+        };
+
+        // Web Worker for Click Stop and Move Date and Time 
+        let myworker = null;
+        let createworker = () => {
+            let worker = new Worker("index.js");
+            datebutton.style.visibility = "hidden";
+            changecolor();
+            datetime.innerHTML = new Date().toString();
+            datetime.hidden = false;
+            worker.onmessage = (e) => {
+                datetime.innerHTML = e.data;
+                changecolor();
+            };
+            return worker;
+        };
+        let terminateworker = () => {
+            myworker.terminate();
+        };
+        datebutton.onclick = () => {
+            myworker = createworker();
+        };
+        datetime.onclick = () => {
+            if (datetime.style.position == "fixed") {
+                terminateworker();
+                datetime.style.position = "relative";
+                datebutton.style.display = "none";
+            } else {
+                myworker = createworker();
+                datetime.style.position = "fixed"
+                datebutton.style.display = "block";
+                datebutton.style.paddingBottom = "5px";
+            }
+        }
+
+        // Personal Info Button
+        let personinfobutton = document.createElement("a");
+        personinfobutton.innerHTML = "Personal Info";
+        personinfobutton.style.color = "plum";
+        personinfobutton.href = "#";
+        personinfobutton.onmouseover = () => {
+            personinfobutton.style.background = "yellow";
+            personinfobutton.style.color = "blue";
+        };
+        personinfobutton.onmouseout = () => {
+            personinfobutton.style.background = "transparent";
+            personinfobutton.style.color = "plum";
+        };
+
+        // Personal Info Container
+        let personinfocontainer = document.createElement("div");
+        personinfocontainer.appendChild(personinfobutton);
+        personinfocontainer.style.marginBlock = "25px";
+        maincontainer.appendChild(personinfocontainer);
+
+        // Personal Info underlist
+        let personinfo = document.createElement("ul");
+        personinfo.hidden = true;
+        personinfobutton.onclick = () => {
+            personinfo.hidden = !personinfo.hidden;
+        };
+
+        // Personal Info of Name
+        let name = document.createElement("li");
+        name.innerHTML = "Name: Thanathon Tangon, ID: 64010315";
+        personinfo.appendChild(name);
+
+        // Personal Info of Subject
+        let subject = document.createElement("li");
+        subject.innerHTML = "Subject: 01076119 Web Application Development";
+        personinfo.appendChild(subject);
+
+        // Personal Info of Semester
+        let semester = document.createElement("li");
+        semester.innerHTML = "Semester: 2/2565";
+        personinfo.appendChild(semester);
+
+        // Append Button of Personal Info
+        maincontainer.appendChild(personinfo);
+
+        // Heading of Snapshots
+        let snapheader = document.createElement("h1");
+        snapheader.innerHTML = "Snapshots";
+        maincontainer.appendChild(snapheader);
+
+        // Array of Img 
+        let snapdata = [
+            ["Fireworks", "https://images.immediate.co.uk/production/volatile/sites/4/2018/07/GettyImages-609942456use-94e3841.jpg"],
+            ["Crest", "https://posterstore.eu/images/zoom/wb0012-8harrypotter-hogwartscrest50x70.jpg"],
+            ["Action", "https://i.pinimg.com/736x/15/e5/48/15e548b5cccc623ea4760723196fce88--action-poses-drawing-poses.jpg"],
+            ["Buffalo", "https://static.bangkokpost.com/media/content/20181128/c1_1583978_700.jpg"],
+        ];
+        snapdata.width = "500px";
+
+        // Snapshots underlist
+        let snapul = document.createElement("ul");
+
+        // Footer of Img Default before click in snapdata
+        let footercontainer = document.createElement("img");
+        footercontainer.src = "https://scontent.fbkk7-2.fna.fbcdn.net/v/t31.18172-8/259106_175069885887262_183888_o.jpg?_nc_cat=111&ccb=1-7&_nc_sid=174925&_nc_ohc=MWSTdmcg6W0AX-jy_bR&_nc_ht=scontent.fbkk7-2.fna&oh=00_AfBmZcyLrVJmz5FVpvcwoHCXIKH1ajICydI9tpuOB-jT7Q&oe=641ACBC7";
+        snapdata.forEach((arr) => {
+            let snapli = document.createElement("li");
+            snapul.appendChild(snapli);
+
+            let snapbutton = document.createElement("a");
+            snapbutton.innerHTML = arr[0];
+            snapbutton.href = "#";
+            snapbutton.onclick = () => {
+                footercontainer.src = arr[1];
+            };
+            snapli.appendChild(snapbutton);
+        });
+
+        // Append of Underlist of Snapshot and Footer Container
+        maincontainer.appendChild(snapul);
+        maincontainer.appendChild(footercontainer);
+    </script>
+</body>
+
+</html>
